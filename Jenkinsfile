@@ -13,9 +13,9 @@ pipeline {
         }
         stage('Build & Push Docker Image') {
             steps {
-		    sh "docker build -f Dockerfile -t {DOCKER_IMAGE_NAME}:'${env.BUILD_NUMBER}' ."
-		sh 'docker login -u mahathkrish -p Krush@131295'
-		sh "docker push {DOCKER_IMAGE_NAME}:'${env.BUILD_NUMBER}'"				
+		    sh "sudo docker build -f Dockerfile -t DOCKER_IMAGE_NAME:'${env.BUILD_NUMBER}' ."
+		sh 'sudo docker login -u mahathkrish -p Krush@131295'
+		sh "sudo docker push DOCKER_IMAGE_NAME:'${env.BUILD_NUMBER}'"				
             }
         }
         stage('CanaryDeploy') {
