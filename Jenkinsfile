@@ -21,7 +21,7 @@ pipeline {
 	stage('DeployToProduction') {
             steps {
 		sh 'chmod 777 train-schedule-kube.yml'
-		sh 'kubectl get svc'
+		echo 'Deployement Completed'
             }
         }
     }
