@@ -18,13 +18,9 @@ pipeline {
 		sh "sudo docker push mahathkrish/train-schedule:'${env.BUILD_NUMBER}'"				
             }
         }
-		stage('DeployToProduction') {
+	stage('DeployToProduction') {
             steps {
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube.yml',
-                    enableConfigSubstitution: true
-                )
+                sh 'sude kubectl create -f train-schedule-kube.yml'
             }
         }
     }
