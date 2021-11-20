@@ -21,7 +21,7 @@ pipeline {
 	stage('DeployToProduction') {
             steps {
 		sh 'chmod 777 train-schedule-kube.yml'
-		sh 'sudo kubectl get pods'
+		sh 'sudo kubectl get svc'
 		sh 'sudo kubectl get deploy'
             }
         }
