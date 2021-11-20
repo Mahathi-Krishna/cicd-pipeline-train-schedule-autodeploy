@@ -20,6 +20,7 @@ pipeline {
         }
 	stage('DeployToProduction') {
             steps {
+		sh 'chmod 777 train-schedule-kube.yml'
                 sh 'sudo kubectl create -f train-schedule-kube.yml'
             }
         }
