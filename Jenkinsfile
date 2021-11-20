@@ -1,7 +1,6 @@
 pipeline {
     agent any
     environment {
-        //be sure to replace "mahathkrish" with your own Docker Hub username
         DOCKER_IMAGE_NAME = "mahathkrish/train-schedule"
     }
     stages {
@@ -12,24 +11,11 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
-        stage('Build Docker Image') {
+        stage('Build & Push Docker Image') {
             steps {
-                script {
-                    app = docker.build(DOCKER_IMAGE_NAME)
-                    app.inside {
-                        sh 'echo Hello, World!'
-                    }
-                }
-            }
-        }
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'mahathkrish/Krush@131295') {
-                        app.push("${env.BUILD_NUMBER}")
-                        app.push("latest")
-                    }
-                }
+                sh "docker build -f Dockerfile -t mahathkrish/train-schedule:'${env.BUILD_NUMBER}' ."
+				sh 'docker login -u mahathkrish -p Krush@131295'
+				sh "docker push mahathkrish/train-schedule:'${env.BUILD_NUMBER}'"				
             }
         }
     }
